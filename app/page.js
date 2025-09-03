@@ -63,12 +63,13 @@ export default function Page() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            overflow: "hidden"
+            overflow: "hidden",
+            padding: 8
           }}>
             <img
-              src="/vtp-logo.svg"
-              alt="VetTechPrep"
-              style={{ width: 28, height: 28, display: "block" }}
+              src="/vtp-logo.png"
+              alt="VetTechPrep logo"
+              style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
             />
           </div>
           <h1 style={{ fontSize: 24, margin: "0 0 6px", color: "#1f2937" }}>
