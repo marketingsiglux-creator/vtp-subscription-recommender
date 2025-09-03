@@ -258,7 +258,7 @@ export default function Page() {
                       fontSize: "clamp(14px, 3.6vw, 16px)",
                     }}
                   >
-                    “I enjoyed using VTP. It was easy to use and gave me multiple ways of studying, other than just
+                    “I enjoyed using VetTechPrep. It was easy to use and gave me multiple ways of studying, other than just
                     memorizing questions. I think it can help build confidence in testing for the VTNE and really
                     help cement information you might not truly have down. VTP helped me pass my VTNE, and I think if
                     you put the work in to complete it, anyone can pass too.”
