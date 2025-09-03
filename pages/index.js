@@ -15,13 +15,10 @@ export default function Home() {
   const result = useMemo(() => {
     if (!examDate) return null;
 
-    // Parse YYYY-MM-DD safely in local time
     const [y, m, d] = examDate.split("-").map(Number);
-    const selected = new Date(y, m - 1, d, 12, 0, 0); // noon local to avoid TZ quirks
-
+    const selected = new Date(y, m - 1, d, 12, 0, 0);
     const today = new Date();
     const todayMid = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-
     const msPerDay = 24 * 60 * 60 * 1000;
     const diffDays = Math.floor((selected - todayMid) / msPerDay);
 
@@ -29,7 +26,6 @@ export default function Home() {
     if (diffDays < 0) return { error: "That date is in the past. Pick a future exam date." };
     if (diffDays === 0) return { error: "That’s today! Choose a future exam date so we can help." };
 
-    // Push 180 unless under 180 days
     const recommend180 = diffDays >= 180;
 
     return {
@@ -56,9 +52,7 @@ export default function Home() {
           <p style={styles.lead}>Enter your VTNE exam date to get a recommendation.</p>
         </header>
 
-        <label htmlFor="examDate" style={styles.label}>
-          Exam date
-        </label>
+        <label htmlFor="examDate" style={styles.label}>Exam date</label>
         <input
           id="examDate"
           type="date"
@@ -68,9 +62,7 @@ export default function Home() {
           style={styles.input}
         />
 
-        {touched && !examDate ? (
-          <p style={styles.help}>Tip: tap the calendar and choose your test day.</p>
-        ) : null}
+        {touched && !examDate ? <p style={styles.help}>Tip: tap the calendar and choose your test day.</p> : null}
 
         {result && (
           <section style={styles.resultBox}>
@@ -114,9 +106,7 @@ export default function Home() {
                   )}
                 </div>
 
-                <p style={styles.smallPrint}>
-                  Not sure? You can always switch your plan before checkout.
-                </p>
+                <p style={styles.smallPrint}>Not sure? You can always switch your plan before checkout.</p>
               </div>
             )}
           </section>
@@ -124,8 +114,7 @@ export default function Home() {
 
         <footer style={styles.footer}>
           <p>
-            Built for <strong>VetTechPrep</strong> • Colors: <code>#237e7d</code> &{" "}
-            <code>#de682d</code>
+            Built for <strong>VetTechPrep</strong> • Colors: <code>#237e7d</code> & <code>#de682d</code>
           </p>
         </footer>
       </div>
