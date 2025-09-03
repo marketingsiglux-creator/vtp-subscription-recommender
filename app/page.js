@@ -158,7 +158,7 @@ export default function Page() {
 
         <footer style={{ marginTop: 18, textAlign: "center", color: "#6b7280" }}>
           <p>
-            Built for <strong>VetTechPrep</strong> • Colors: <code>#237e7d</code> & <code>#de682d</code>
+            Built for <strong>VetTechPrep</strong> 
           </p>
         </footer>
       </div>
