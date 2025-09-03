@@ -27,7 +27,7 @@ export default function Page() {
       days: diffDays,
       plan: recommend180 ? "180-day" : "90-day",
       description: recommend180
-        ? "You have ample time to prep with full coverage and review."
+        ? "You have ample time to prep with full coverage and review. Start Prepping!"
         : "You’re inside 180 days, focus and stay sharp with the 90-day plan.",
     };
   }, [examDate]);
