@@ -114,7 +114,8 @@ export default function Home() {
 
         <footer style={styles.footer}>
           <p>
-            Built for <strong>VetTechPrep</strong> • Colors: <code>#237e7d</code> & <code>#de682d</code>
+            Built for <strong>VetTechPrep</strong> • Colors: <code>#237e7d</code> &{" "}
+            <code>#de682d</code>
           </p>
         </footer>
       </div>
