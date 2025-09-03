@@ -35,8 +35,8 @@ export default function Page() {
         plan === "180-day"
           ? "You have ample time to prep with full coverage and review."
           : plan === "90-day"
-          ? "You’re inside 180 days—focus and stay sharp with the 90-day plan."
-          : "You’re inside 90 days—use the 45-day plan to focus and finalize.",
+          ? "You’re inside 180 days, focus and stay sharp with the 90-day plan."
+          : "You’re inside 90 days, use the 45-day plan to focus and finalize.",
     };
   }, [examDate]);
 
