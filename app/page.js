@@ -12,7 +12,7 @@ export default function Page() {
     if (!examDate) return null;
 
     const [y, m, d] = examDate.split("-").map(Number);
-    const selected = new Date(y, m - 1, d, 12, 0, 0); // noon local to avoid TZ quirks
+    const selected = new Date(y, m - 1, d, 12, 0, 0); // noon local
     const today = new Date();
     const todayMid = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     const msPerDay = 24 * 60 * 60 * 1000;
@@ -42,27 +42,34 @@ export default function Page() {
     <main style={{
       minHeight: "100vh",
       background: "#ffffff",
+      padding: 24,
       display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: 24
+      alignItems: "flex-start",
+      justifyContent: "center"
     }}>
       <div style={{
         width: "100%",
         maxWidth: 640,
         background: "#ffffff",
-        borderRadius: 16,
-        boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
         padding: 24
       }}>
         <header style={{ textAlign: "center", marginBottom: 16 }}>
           <div style={{
-            width: 56, height: 56, borderRadius: "50%", margin: "0 auto 12px",
-            background: PRIMARY, color: "#ffffff",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontWeight: 800, letterSpacing: 1
+            width: 56,
+            height: 56,
+            borderRadius: "50%",
+            margin: "0 auto 12px",
+            background: PRIMARY,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden"
           }}>
-            VTP
+            <img
+              src="/vtp-logo.svg"
+              alt="VetTechPrep"
+              style={{ width: 28, height: 28, display: "block" }}
+            />
           </div>
           <h1 style={{ fontSize: 24, margin: "0 0 6px", color: "#1f2937" }}>
             Find your best VetTechPrep plan
@@ -83,6 +90,9 @@ export default function Page() {
           onBlur={() => setTouched(true)}
           style={{
             width: "100%",
+            maxWidth: "100%",
+            boxSizing: "border-box",
+            display: "block",
             padding: "12px 14px",
             borderRadius: 10,
             border: "1px solid #d1d5db",
@@ -155,12 +165,6 @@ export default function Page() {
             )}
           </section>
         )}
-
-        <footer style={{ marginTop: 18, textAlign: "center", color: "#6b7280" }}>
-          <p>
-            Built for <strong>VetTechPrep</strong> 
-          </p>
-        </footer>
       </div>
     </main>
   );
