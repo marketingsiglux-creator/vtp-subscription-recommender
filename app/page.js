@@ -41,7 +41,7 @@ export default function Page() {
   return (
     <main style={{
       minHeight: "100vh",
-      background: "#f7faf9",
+      background: "#ffffff",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
