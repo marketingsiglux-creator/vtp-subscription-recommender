@@ -1,8 +1,8 @@
 "use client";
 import { useMemo, useState } from "react";
 
-const PRIMARY = "#237e7d";
-const SECONDARY = "#de682d";
+const PRIMARY = "#237e7d";   // VetTechPrep primary
+const SECONDARY = "#de682d"; // VetTechPrep secondary
 
 export default function Page() {
   const [examDate, setExamDate] = useState("");
@@ -12,7 +12,7 @@ export default function Page() {
     if (!examDate) return null;
 
     const [y, m, d] = examDate.split("-").map(Number);
-    const selected = new Date(y, m - 1, d, 12, 0, 0); // noon local
+    const selected = new Date(y, m - 1, d, 12, 0, 0); // noon local to avoid TZ quirks
     const today = new Date();
     const todayMid = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     const msPerDay = 24 * 60 * 60 * 1000;
@@ -22,21 +22,35 @@ export default function Page() {
     if (diffDays < 0) return { error: "That date is in the past. Pick a future exam date." };
     if (diffDays === 0) return { error: "That’s today! Choose a future exam date so we can help." };
 
-    const recommend180 = diffDays >= 180;
+    // === Business rules ===
+    // ≥180 => 180-day
+    // 90–179 => 90-day
+    // 1–89 => 45-day
+    let plan = "180-day";
+    if (diffDays < 180 && diffDays >= 90) plan = "90-day";
+    if (diffDays < 90) plan = "45-day";
+
     return {
       days: diffDays,
-      plan: recommend180 ? "180-day" : "90-day",
-      description: recommend180
-        ? "You have ample time to prep with full coverage and review. Start Prepping!"
-        : "You’re inside 180 days, focus and stay sharp with the 90-day plan.",
+      plan,
+      description:
+        plan === "180-day"
+          ? "You have ample time to prep with full coverage and review."
+          : plan === "90-day"
+          ? "You’re inside 180 days—focus and stay sharp with the 90-day plan."
+          : "You’re inside 90 days—use the 45-day plan to focus and finalize.",
     };
   }, [examDate]);
 
   const pricingUrl = "https://www.vettechprep.com/sign-up-and-pricing.jsp";
   const pricingHref =
     result && !result.error
-      ? `${pricingUrl}?recommended=${result.plan === "180-day" ? "180" : "90"}`
+      ? `${pricingUrl}?recommended=${result.plan.replace("-day", "")}` // 180 / 90 / 45
       : pricingUrl;
+
+  // Choose a button/background color by plan (180 = PRIMARY, others = SECONDARY)
+  const planBg =
+    result?.plan === "180-day" ? PRIMARY : SECONDARY;
 
   return (
     <main style={{
@@ -67,7 +81,7 @@ export default function Page() {
             padding: 8
           }}>
             <img
-              src="/vtp-logo.png"
+              src="/vtp-logo.png"  // put your logo in /public/vtp-logo.png (or change the name here)
               alt="VetTechPrep logo"
               style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
             />
@@ -108,8 +122,11 @@ export default function Page() {
 
         {result && (
           <section style={{
-            marginTop: 16, padding: 16, borderRadius: 12,
-            background: "#f3f7f6", border: `${PRIMARY}22 solid 1px`
+            marginTop: 16,
+            padding: 16,
+            borderRadius: 12,
+            background: "#f3f7f6",
+            border: `${PRIMARY}22 solid 1px`
           }}>
             {result.error ? (
               <p style={{ color: "#b91c1c", fontWeight: 600 }}>{result.error}</p>
@@ -121,21 +138,14 @@ export default function Page() {
                 </p>
                 <p style={{ color: "#6b7280", marginBottom: 0 }}>Recommended plan</p>
                 <p style={{ fontSize: 14, color: "#1f2937" }}>
-                  {result.plan === "180-day" ? (
-                    <strong style={{
-                      background: PRIMARY, color: "#ffffff",
-                      padding: "6px 10px", borderRadius: 999
-                    }}>
-                      180-day
-                    </strong>
-                  ) : (
-                    <strong style={{
-                      background: SECONDARY, color: "#ffffff",
-                      padding: "6px 10px", borderRadius: 999
-                    }}>
-                      90-day
-                    </strong>
-                  )}
+                  <strong style={{
+                    background: planBg,
+                    color: "#ffffff",
+                    padding: "6px 10px",
+                    borderRadius: 999
+                  }}>
+                    {result.plan}
+                  </strong>
                 </p>
                 <p style={{ color: "#374151", marginTop: 12 }}>{result.description}</p>
 
@@ -151,7 +161,7 @@ export default function Page() {
                       padding: "12px 16px",
                       borderRadius: 12,
                       fontWeight: 700,
-                      background: result.plan === "180-day" ? PRIMARY : SECONDARY,
+                      background: planBg,
                       color: "#ffffff"
                     }}
                   >
