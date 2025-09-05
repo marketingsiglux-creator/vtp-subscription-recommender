@@ -1,11 +1,11 @@
 "use client";
 import { useMemo, useState } from "react";
 
-const PRIMARY = "#237e7d";
-const SECONDARY = "#de682d";
+const PRIMARY = "#237e7d";   // VetTechPrep primary
+const SECONDARY = "#de682d"; // VetTechPrep secondary
 
 // "circle" or "rounded"
-const LOGO_SHAPE = "rounded";
+const LOGO_SHAPE = "circle";
 
 export default function Page() {
   const [examDate, setExamDate] = useState("");
@@ -49,7 +49,8 @@ export default function Page() {
 
   const planBg = result?.plan === "180-day" ? PRIMARY : SECONDARY;
 
-  const logoSide = "clamp(72px, 14vw, 100px)";
+  // Bigger logo, snug background
+  const logoSide = "clamp(100px, 18vw, 140px)";
   const logoRadius = LOGO_SHAPE === "circle" ? "50%" : "24px";
 
   return (
@@ -84,7 +85,6 @@ export default function Page() {
               alignItems: "center",
               justifyContent: "center",
               overflow: "hidden",
-              padding: "10%",
               boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
             }}
           >
@@ -92,8 +92,8 @@ export default function Page() {
               src="/vtp-logo.png"
               alt="VetTechPrep logo"
               style={{
-                width: "100%",
-                height: "100%",
+                width: "95%",   // fills most of the box
+                height: "95%",
                 objectFit: "contain",
                 display: "block",
               }}
