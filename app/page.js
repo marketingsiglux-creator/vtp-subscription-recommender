@@ -1,10 +1,10 @@
 "use client";
 import { useMemo, useState } from "react";
 
-const PRIMARY = "#237e7d";   // VetTechPrep primary
-const SECONDARY = "#de682d"; // VetTechPrep secondary
+const PRIMARY = "#237e7d";
+const SECONDARY = "#de682d";
 
-// Change this to "circle" or "rounded"
+// "circle" or "rounded"
 const LOGO_SHAPE = "rounded";
 
 export default function Page() {
