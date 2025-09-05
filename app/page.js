@@ -51,7 +51,7 @@ export default function Page() {
   const planBg = result?.plan === "180-day" ? PRIMARY : SECONDARY;
 
   // Larger, legible logo container
-  const logoSide = "clamp(72px, 14vw, 100px)";
+  const logoSide = "clamp(72px, 14vw, 120px)";
   const logoRadius = LOGO_SHAPE === "circle" ? "50%" : "24px";
 
   return (
