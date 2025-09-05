@@ -5,7 +5,7 @@ const PRIMARY = "#237e7d";   // VetTechPrep primary
 const SECONDARY = "#de682d"; // VetTechPrep secondary
 
 // Change this to "circle" or "rounded"
-const LOGO_SHAPE: "circle" | "rounded" = "rounded";
+const LOGO_SHAPE = "rounded";
 
 export default function Page() {
   const [examDate, setExamDate] = useState("");
@@ -15,7 +15,7 @@ export default function Page() {
     if (!examDate) return null;
 
     const [y, m, d] = examDate.split("-").map(Number);
-    const selected = new Date(y, m - 1, d, 12, 0, 0); // noon local
+    const selected = new Date(y, m - 1, d, 12, 0, 0);
     const today = new Date();
     const todayMid = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     const msPerDay = 24 * 60 * 60 * 1000;
@@ -47,11 +47,9 @@ export default function Page() {
       ? `${pricingUrl}?recommended=${result.plan.replace("-day", "")}`
       : pricingUrl;
 
-  // CTA background: 180 = PRIMARY, 90/45 = SECONDARY
   const planBg = result?.plan === "180-day" ? PRIMARY : SECONDARY;
 
-  // Larger, legible logo container
-  const logoSide = "clamp(72px, 14vw, 120px)";
+  const logoSide = "clamp(72px, 14vw, 100px)";
   const logoRadius = LOGO_SHAPE === "circle" ? "50%" : "24px";
 
   return (
@@ -86,7 +84,7 @@ export default function Page() {
               alignItems: "center",
               justifyContent: "center",
               overflow: "hidden",
-              padding: "10%", // keeps clear edges around logo
+              padding: "10%",
               boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
             }}
           >
@@ -190,14 +188,13 @@ export default function Page() {
                   {result.days}
                 </p>
 
-                {/* Recommended plan with improved spacing */}
                 <div
                   style={{
                     marginTop: 12,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "flex-start",
-                    gap: 8, // spacing between label and badge
+                    gap: 8,
                   }}
                 >
                   <span
@@ -262,7 +259,6 @@ export default function Page() {
                   </a>
                 </div>
 
-                {/* Testimonial */}
                 <div
                   style={{
                     marginTop: 16,
@@ -272,7 +268,6 @@ export default function Page() {
                     border: "1px solid #e5e7eb",
                   }}
                 >
-                  {/* Five-star rating */}
                   <div
                     style={{ display: "flex", gap: 4, marginBottom: 8 }}
                     aria-label="5 out of 5 stars"
