@@ -4,6 +4,9 @@ import { useMemo, useState } from "react";
 const PRIMARY = "#237e7d";   // VetTechPrep primary
 const SECONDARY = "#de682d"; // VetTechPrep secondary
 
+// Change this to "circle" or "rounded"
+const LOGO_SHAPE: "circle" | "rounded" = "rounded";
+
 export default function Page() {
   const [examDate, setExamDate] = useState("");
   const [touched, setTouched] = useState(false);
@@ -12,7 +15,7 @@ export default function Page() {
     if (!examDate) return null;
 
     const [y, m, d] = examDate.split("-").map(Number);
-    const selected = new Date(y, m - 1, d, 12, 0, 0); // noon local to avoid TZ quirks
+    const selected = new Date(y, m - 1, d, 12, 0, 0); // noon local
     const today = new Date();
     const todayMid = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     const msPerDay = 24 * 60 * 60 * 1000;
@@ -22,8 +25,6 @@ export default function Page() {
     if (diffDays < 0) return { error: "That date is in the past. Pick a future exam date." };
     if (diffDays === 0) return { error: "That’s today! Choose a future exam date so we can help." };
 
-    // Plans:
-    // ≥180 => 180-day; 90–179 => 90-day; 1–89 => 45-day
     let plan = "180-day";
     if (diffDays < 180 && diffDays >= 90) plan = "90-day";
     if (diffDays < 90) plan = "45-day";
@@ -43,18 +44,22 @@ export default function Page() {
   const pricingUrl = "https://www.vettechprep.com/sign-up-and-pricing.jsp";
   const pricingHref =
     result && !result.error
-      ? `${pricingUrl}?recommended=${result.plan.replace("-day", "")}` // 180 / 90 / 45
+      ? `${pricingUrl}?recommended=${result.plan.replace("-day", "")}`
       : pricingUrl;
 
   // CTA background: 180 = PRIMARY, 90/45 = SECONDARY
   const planBg = result?.plan === "180-day" ? PRIMARY : SECONDARY;
+
+  // Larger, legible logo container
+  const logoSide = "clamp(72px, 14vw, 100px)";
+  const logoRadius = LOGO_SHAPE === "circle" ? "50%" : "24px";
 
   return (
     <main
       style={{
         minHeight: "100vh",
         background: "#ffffff",
-        padding: "16px 12px", // tighter on mobile
+        padding: "16px 12px",
         display: "flex",
         alignItems: "flex-start",
         justifyContent: "center",
@@ -65,27 +70,28 @@ export default function Page() {
           width: "100%",
           maxWidth: 640,
           background: "#ffffff",
-          padding: "16px", // lighter padding for phones
+          padding: "16px",
           margin: "0 auto",
         }}
       >
-        <header style={{ textAlign: "center", marginBottom: 16 }}>
+        <header style={{ textAlign: "center", marginBottom: 20 }}>
           <div
             style={{
-              width: 56,
-              height: 56,
-              borderRadius: "50%",
-              margin: "0 auto 12px",
+              width: logoSide,
+              height: logoSide,
+              borderRadius: logoRadius,
+              margin: "0 auto 14px",
               background: PRIMARY,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               overflow: "hidden",
-              padding: 8, // logo breathing room
+              padding: "10%", // keeps clear edges around logo
+              boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
             }}
           >
             <img
-              src="/vtp-logo.png" // place file in /public/vtp-logo.png (or change the name)
+              src="/vtp-logo.png"
               alt="VetTechPrep logo"
               style={{
                 width: "100%",
@@ -95,10 +101,11 @@ export default function Page() {
               }}
             />
           </div>
+
           <h1
             style={{
               fontSize: "clamp(20px, 5vw, 28px)",
-              margin: "0 0 6px",
+              margin: "0 0 8px",
               color: "#1f2937",
               lineHeight: 1.25,
             }}
@@ -116,7 +123,7 @@ export default function Page() {
             display: "block",
             fontWeight: 600,
             marginTop: 16,
-            marginBottom: 6,
+            marginBottom: 8,
             fontSize: "clamp(14px, 3.6vw, 16px)",
           }}
         >
@@ -150,7 +157,7 @@ export default function Page() {
         {result && (
           <section
             style={{
-              marginTop: 16,
+              marginTop: 18,
               padding: 16,
               borderRadius: 12,
               background: "#f3f7f6",
@@ -176,42 +183,70 @@ export default function Page() {
                   style={{
                     fontSize: "clamp(24px, 6.5vw, 36px)",
                     fontWeight: 800,
-                    margin: "4px 0 12px",
+                    margin: "6px 0 14px",
                     color: "#1f2937",
                   }}
                 >
                   {result.days}
                 </p>
 
-                <p style={{ color: "#6b7280", marginBottom: 0, fontSize: "clamp(12px, 3.2vw, 14px)" }}>
-                  Recommended plan
-                </p>
-                <p style={{ fontSize: "clamp(14px, 3.6vw, 16px)", color: "#1f2937", margin: "4px 0 8px" }}>
-                  <strong
+                {/* Recommended plan with improved spacing */}
+                <div
+                  style={{
+                    marginTop: 12,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    gap: 8, // spacing between label and badge
+                  }}
+                >
+                  <span
                     style={{
+                      color: "#6b7280",
+                      fontSize: "clamp(12px, 3.2vw, 14px)",
+                      lineHeight: 1.3,
+                    }}
+                  >
+                    Recommended plan
+                  </span>
+
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      lineHeight: 1,
                       background: planBg,
                       color: "#ffffff",
-                      padding: "6px 10px",
+                      padding: "8px 12px",
                       borderRadius: 999,
+                      fontWeight: 700,
+                      fontSize: "clamp(14px, 3.6vw, 16px)",
                       whiteSpace: "nowrap",
                     }}
                   >
                     {result.plan}
-                  </strong>
-                </p>
+                  </span>
+                </div>
 
-                <p style={{ color: "#374151", marginTop: 8, fontSize: "clamp(14px, 3.6vw, 16px)", lineHeight: 1.5 }}>
+                <p
+                  style={{
+                    color: "#374151",
+                    marginTop: 12,
+                    fontSize: "clamp(14px, 3.6vw, 16px)",
+                    lineHeight: 1.5,
+                  }}
+                >
                   {result.description}
                 </p>
 
-                <div style={{ display: "flex", gap: 12, marginTop: 12 }}>
+                <div style={{ display: "flex", gap: 12, marginTop: 14 }}>
                   <a
                     href={pricingHref}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Go to VetTechPrep pricing to choose the ${result.plan}`}
                     style={{
-                      display: "block", // full width on mobile
+                      display: "block",
                       width: "100%",
                       textDecoration: "none",
                       padding: "14px 16px",
